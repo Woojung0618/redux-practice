@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { createStore } from "redux";
 
 const ADD = "ADD";
