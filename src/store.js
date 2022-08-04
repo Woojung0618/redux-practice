@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createStore } from "redux";
 
 const ADD = "ADD";
@@ -17,12 +18,17 @@ const deleteToDo = (id) => {
     }
 }
 
-const reducer = (state=[], action) => {
+
+const reducer = (state=JSON.parse(localStorage.getItem("toDos")) || [], action) => {
     switch(action.type) {
         case ADD:
-            return [{text: action.text, id: Date.now(0)}, ...state]
+            const addToDos = [{text: action.text, id: Date.now(0)}, ...state]
+            localStorage.setItem("toDos", JSON.stringify(addToDos))
+            return addToDos
         case DELETE:
-            return state.filter(toDo => toDo.id !== action.id);
+            const deleteToDos = state.filter(toDo => toDo.id !== action.id);
+            localStorage.setItem("toDos", JSON.stringify(deleteToDos));
+            return deleteToDos
         default:
             return state
         }       
